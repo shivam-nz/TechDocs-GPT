@@ -1,5 +1,59 @@
-# Team17-Engineering Copilot using LLMs augmented with Public and Proprietary Documentation
+# Pinecone Chatbot
 
+A Streamlit-based chatbot interface for Pinecone vector search.
 
-Abstract:
-This paper presents a chat-bot application that is capable of answering engineering queries in the field of semiconductor devices. It is targeted as a replacement to traditional engineer-to-engineer interactions for addressing customer queries on specific Integrated Circuits (ICs) by referring to company proprietary documentation such as IC datasheets, application notes, and user manuals, as well as publicly available information. This application is to be built using open-source Large Language Models (LLMs), software based on Retrieval Augmented Generation (RAG) and LangChain framework. Performance comparisons of multiple RAG approaches will be published, along with those of commercially available tools of a test dataset of questions and answers.
+## Setup
+
+1. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Update the `.env` file with your Pinecone API key
+4. Run the application:
+   ```bash
+   streamlit run app.py
+   ```
+
+## Features
+
+- Chat interface for querying Pinecone vector database
+- Secure API key handling
+- Chat history persistence
+- Real-time vector search
+- Error handling and feedback
+
+## Configuration
+
+Update the `.env` file with your Pinecone API key:
+```env
+PINECONE_API_KEY=your_pinecone_api_key_here
+```
+```
+
+After creating all these files, you should:
+
+1. Create and activate a virtual environment:
+```bash
+cd pinecone_app
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+2. Install the requirements:
+```bash
+pip install -r requirements.txt
+```
+
+3. Update the `.env` file with your actual Pinecone API key
+
+4. Run the application:
+```bash
+streamlit run app.py
+```
+
+Would you like me to help you with any of these steps or explain any part of the code in more detail?
