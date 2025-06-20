@@ -1,10 +1,5 @@
 import streamlit as st
-from utils import (
-    ChatMessage,
-    initialize_pinecone,
-    query_pinecone,
-    setup_index_with_data
-)
+from utils import *
 import os
 from dotenv import load_dotenv
 
@@ -64,20 +59,20 @@ if "rag_orchestrator" not in st.session_state:
     st.session_state.rag_orchestrator = None
 
 # Get API keys from environment variables
-pinecone_api_key = os.getenv("PINECONE_API_KEY")
-openai_api_key = os.getenv("OPENAI_API_KEY")
+PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Initialize Pinecone if not already done
 if st.session_state.rag_orchestrator is None:
-    if not pinecone_api_key or not openai_api_key:
+    if not PINECONE_API_KEY or not OPENAI_API_KEY:
         st.error("Please set your PINECONE_API_KEY and OPENAI_API_KEY in the .env file")
     else:
-        orchestrator = initialize_pinecone(pinecone_api_key)
+        orchestrator = initialize_agent(OPENAI_API_KEY, PINECONE_API_KEY)
         if orchestrator:
             st.session_state.rag_orchestrator = orchestrator
             # Upload sample data
-            setup_index_with_data(orchestrator)
-            st.success("RAG system initialized successfully!")
+            #isetup_index_with_data(orchestrator)
+            #st.success("RAG system initialized successfully!")
 
 # Display chat messages
 for message in st.session_state.messages:
