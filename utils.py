@@ -479,7 +479,7 @@ class RAGOrchestrator:
             "context": result['context']
         }
 
-def initialize_agent(OPENAI_API_KEY, PINECONE_API_KEY, retrieval_strategy="simple") -> Optional[RAGOrchestrator]:
+def initialize_agent(OPENAI_API_KEY, PINECONE_API_KEY, retrieval_strategy="simple", post_retrieval_processing='none', prompt_strategy='strict_context') -> Optional[RAGOrchestrator]:
     """
     Initialize the RAG Orchestrator with Pinecone configuration.
     """
@@ -491,8 +491,8 @@ def initialize_agent(OPENAI_API_KEY, PINECONE_API_KEY, retrieval_strategy="simpl
         config = {
             "llm_model": "gpt-4o-mini",
     	    "retrieval_strategy": retrieval_strategy,
-    	    "post_retrieval_processing": "semantic_re_ranking+contextual_compression",
-    	    "prompt_strategy": "strict_context",
+    	    "post_retrieval_processing": post_retrieval_processing,
+    	    "prompt_strategy": prompt_strategy,
     	    "index_name": "swru526-index",
     	    "namespace": "example-namespace",
     	    "top_k": 10,
@@ -514,7 +514,7 @@ def initialize_agent(OPENAI_API_KEY, PINECONE_API_KEY, retrieval_strategy="simpl
         st.error(f"Error initializing Pinecone: {str(e)}")
         return None
 
-def query_pinecone(orchestrator: RAGOrchestrator, query_text: str, retrieval_strategy) -> str:
+def query_pinecone(orchestrator: RAGOrchestrator, query_text: str, retrieval_strategy, post_retrieval_processing,prompt_strategy) -> str:
     """
     Query using the RAG Orchestrator and format the response.
     """
