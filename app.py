@@ -8,7 +8,7 @@ load_dotenv()
 
 # Page config
 st.set_page_config(
-    page_title="RAG-powered Chatbot",
+    page_title="Tech-Docs GPT",
     page_icon="🤖",
     layout="wide"
 )
@@ -17,9 +17,13 @@ st.set_page_config(
 with st.sidebar:
     st.header("📚 About")
     st.markdown("""
-    This chatbot uses advanced RAG (Retrieval Augmented Generation) techniques to provide accurate answers based on the available context.
+    This chatbot uses advanced RAG (Retrieval Augmented Generation) techniques to provide accurate answers based on the available context related to tech Documents.
     """)
-    
+
+    st.header("Question Bank ?📚 ")
+    st.markdown("[Question Bank for reference questions](https://www.google.com)")
+
+
     st.header("🛠️ Features")
     st.markdown("""
     - RAG Fusion for better document retrieval
@@ -30,17 +34,18 @@ with st.sidebar:
     
     st.header("🔍 Retrieval Strategies")
     st.markdown("""
-    - **RAG Fusion**: Combines results from multiple queries
-    - **Multi-query**: Generates diverse search queries
-    - **Simple**: Direct document retrieval
-    """)
+    - **Simple**
+    - **Multi-query**
+    - **RAG Fusion**
+    - **Decomposition**
+    - **Step-back**
+    - **HyDE (Hypothetical Document Embeddings)**
+    - **LLM-only**
+""")
     
     st.header("📋 Instructions")
     st.markdown("""
-    1. Make sure you have set your API keys in the `.env` file:
-       - `PINECONE_API_KEY`
-       - `OPENAI_API_KEY`
-    2. Ask questions about the sample data
+    1. Ask questions about different TI devices like AWR2544, AM263P, MMWAVE radar sensors, etc
     3. The system will:
        - Generate multiple search queries
        - Retrieve relevant documents
@@ -48,8 +53,8 @@ with st.sidebar:
     """)
 
 # Main content
-st.title("🤖 RAG-powered Chatbot")
-st.markdown("Ask questions about the data stored in Pinecone!")
+st.title("🤖 Tech-Docs GPT")
+st.markdown("Ask questions about the different TI devices!")
 
 # Initialize session state for chat history
 if "messages" not in st.session_state:
