@@ -490,10 +490,10 @@ def initialize_agent(OPENAI_API_KEY, PINECONE_API_KEY) -> Optional[RAGOrchestrat
     try:
         config = {
             "llm_model": "gpt-4o-mini",
-    	    "retrieval_strategy": "decomposition",
+    	    "retrieval_strategy": "simple",
     	    "post_retrieval_processing": "semantic_re_ranking+contextual_compression",
-    	    "prompt_strategy": "permissive_context",
-    	    "index_name": "test-index",
+    	    "prompt_strategy": "strict_context",
+    	    "index_name": "swru526-index",
     	    "namespace": "example-namespace",
     	    "top_k": 10,
     	    "reranker_top_n": 5,  # This is for the re-ranker, if used
