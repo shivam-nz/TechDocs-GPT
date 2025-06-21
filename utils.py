@@ -479,7 +479,7 @@ class RAGOrchestrator:
             "context": result['context']
         }
 
-def initialize_agent(OPENAI_API_KEY, PINECONE_API_KEY) -> Optional[RAGOrchestrator]:
+def initialize_agent(OPENAI_API_KEY, PINECONE_API_KEY, retrieval_strategy="simple") -> Optional[RAGOrchestrator]:
     """
     Initialize the RAG Orchestrator with Pinecone configuration.
     """
@@ -490,7 +490,7 @@ def initialize_agent(OPENAI_API_KEY, PINECONE_API_KEY) -> Optional[RAGOrchestrat
     try:
         config = {
             "llm_model": "gpt-4o-mini",
-    	    "retrieval_strategy": "simple",
+    	    "retrieval_strategy": retrieval_strategy,
     	    "post_retrieval_processing": "semantic_re_ranking+contextual_compression",
     	    "prompt_strategy": "strict_context",
     	    "index_name": "swru526-index",
@@ -514,7 +514,7 @@ def initialize_agent(OPENAI_API_KEY, PINECONE_API_KEY) -> Optional[RAGOrchestrat
         st.error(f"Error initializing Pinecone: {str(e)}")
         return None
 
-def query_pinecone(orchestrator: RAGOrchestrator, query_text: str) -> str:
+def query_pinecone(orchestrator: RAGOrchestrator, query_text: str, retrieval_strategy) -> str:
     """
     Query using the RAG Orchestrator and format the response.
     """
@@ -525,34 +525,34 @@ def query_pinecone(orchestrator: RAGOrchestrator, query_text: str) -> str:
         st.error(f"Error: {str(e)}")
         raise Exception(f"Error querying Pinecone: {str(e)}")
 
-def setup_index_with_data(orchestrator: RAGOrchestrator) -> None:
-    """
-    Set up the Pinecone index with initial data.
-    """
-    try:
-        # Sample data
-        data = [
-            {"id": "vec1", "text": "Apple is a popular fruit known for its sweetness and crisp texture."},
-            {"id": "vec2", "text": "The tech company Apple is known for its innovative products like the iPhone."},
-            {"id": "vec3", "text": "Many people enjoy eating apples as a healthy snack."},
-            {"id": "vec4", "text": "Apple Inc. has revolutionized the tech industry with its sleek designs and user-friendly interfaces."},
-            {"id": "vec5", "text": "An apple a day keeps the doctor away, as the saying goes."},
-            {"id": "vec6", "text": "Apple Computer Company was founded on April 1, 1976, by Steve Jobs, Steve Wozniak, and Ronald Wayne as a partnership."}
-        ]
+# def setup_index_with_data(orchestrator: RAGOrchestrator) -> None:
+#     """
+#     Set up the Pinecone index with initial data.
+#     """
+#     try:
+#         # Sample data
+#         data = [
+#             {"id": "vec1", "text": "Apple is a popular fruit known for its sweetness and crisp texture."},
+#             {"id": "vec2", "text": "The tech company Apple is known for its innovative products like the iPhone."},
+#             {"id": "vec3", "text": "Many people enjoy eating apples as a healthy snack."},
+#             {"id": "vec4", "text": "Apple Inc. has revolutionized the tech industry with its sleek designs and user-friendly interfaces."},
+#             {"id": "vec5", "text": "An apple a day keeps the doctor away, as the saying goes."},
+#             {"id": "vec6", "text": "Apple Computer Company was founded on April 1, 1976, by Steve Jobs, Steve Wozniak, and Ronald Wayne as a partnership."}
+#         ]
 
-        records = []
-        for item in data:
-            records.append({
-                "id": item["id"],
-                "fields": {"text": item["text"]}
-            })
+#         records = []
+#         for item in data:
+#             records.append({
+#                 "id": item["id"],
+#                 "fields": {"text": item["text"]}
+#             })
 
-        orchestrator.retriever._index.upsert(
-            vectors=records,
-            namespace=orchestrator.retriever._namespace
-        )
-        st.success("Successfully uploaded data to Pinecone!")
+#         orchestrator.retriever._index.upsert(
+#             vectors=records,
+#             namespace=orchestrator.retriever._namespace
+#         )
+#         st.success("Successfully uploaded data to Pinecone!")
         
-    except Exception as e:
-        st.error(f"Error upserting data: {str(e)}")
-        raise Exception(f"Error upserting data: {str(e)}")
+#     except Exception as e:
+#         st.error(f"Error upserting data: {str(e)}")
+#         raise Exception(f"Error upserting data: {str(e)}")
